@@ -3,7 +3,9 @@ const desktopMenu = document.querySelector(".desktop-menu")
 const burgerIcon = document.querySelector(".menu")
 const cartIcon = document.querySelector(".navbar-shopping-cart")
 const mobileMenu = document.querySelector(".mobile-menu")
-const asideMenu = document.querySelector(".product-detail")
+const cartMenu = document.querySelector("#shoppingCart")
+const productMenu = document.querySelector("#productDetail")
+const closeDetailIcon = document.querySelector(".product-detail-close")
 const cardsContainer = document.querySelector(".cards-container")
 
 const productList = []
@@ -21,38 +23,57 @@ renderProducts(productList)
 menuEmail.addEventListener('click', toggleDesktopMenu)
 burgerIcon.addEventListener('click', toggleMobileMenu)
 cartIcon.addEventListener('click', toggleCartAside)
+closeDetailIcon.addEventListener('click', () => {
+    productMenu.classList.add('inactive')
+})
 
 function toggleDesktopMenu(event) {
     desktopMenu.classList.toggle('inactive')
     mobileMenu.classList.add('inactive')
-    asideMenu.classList.add('inactive')
+    cartMenu.classList.add('inactive')
+    productMenu.classList.add('inactive')
 }
 
 function toggleMobileMenu(event) {
     mobileMenu.classList.toggle('inactive')
     desktopMenu.classList.add('inactive')
-    asideMenu.classList.add('inactive')
+    cartMenu.classList.add('inactive')
+    productMenu.classList.add('inactive')
 }
 
 function toggleCartAside(event) {
-    asideMenu.classList.toggle('inactive')
+    cartMenu.classList.toggle('inactive')
     desktopMenu.classList.add('inactive')
     mobileMenu.classList.add('inactive')
+    productMenu.classList.add('inactive')
+}
+
+function openDetailAside(event) {
+    productMenu.classList.remove('inactive')
+    desktopMenu.classList.add('inactive')
+    mobileMenu.classList.add('inactive')
+    cartMenu.classList.add('inactive')
 }
 
 function renderProducts(productArr) {
     for (product of productArr) {
         const divProductCard = document.createElement('div')
         divProductCard.classList.add('product-card')
+
         const imgBase = document.createElement('img')
         imgBase.setAttribute('src', product.img)
+        imgBase.addEventListener('click', openDetailAside)
+
         const divProductInfo = document.createElement('div')
         divProductInfo.classList.add('product-info')
+
         const div = document.createElement('div')
         const pPrice = document.createElement('p')
         pPrice.textContent = `$ ${product.price}`
+
         const pName = document.createElement('p')
         pName.textContent = product.name
+
         const figure = document.createElement('figure')
         const imgIcon = document.createElement('img')
     
